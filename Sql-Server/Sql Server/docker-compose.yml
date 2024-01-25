@@ -1,0 +1,36 @@
+version: '3.3'
+
+networks: 
+  ntsql:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.23.0.0/24
+
+services:
+  sqlsrv:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    restart: unless-stopped
+    container_name: sqlserver
+    volumes: 
+      #- sqlsdb-volume:/var/opt/mssql
+      - type: bind
+        source: ./dockervol
+        target: /var/opt/mssql/data
+    networks: 
+      ntsql:
+        ipv4_address: 172.23.0.2
+    ports:
+      - target: 1433
+        published: 1433 
+        protocol: tcp
+        mode: host
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=123Stella
+      - MSSQL_PID=Express
+        
+volumes:
+  sqlsdb-volume:
+

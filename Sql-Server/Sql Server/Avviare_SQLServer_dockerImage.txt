@@ -1,0 +1,63 @@
+sudo service docker start
+
+cd "/mnt/c/Users/mdeidda/Documents/Visual Studio 2022/Projects/Alphashop/Sql-Server/Sql Server"
+
+docker-compose up -d
+
+//provare anche questo se non si vuole accedere alla cartella direttamente:
+sudo docker-compose -f "/mnt/c/Users/mdeidda/Documents/Visual Studio 2022/Projects/Alphashop/Sql-Server/Sql Server/docker-compose.yml" up --build -d
+
+Ripristino e entrare dentro il container dell'immagine sql server:
+docker ps (stampare tutti i container)
+
+Accedere al container:
+docker exec -it ContainerID "bash" (containerId=a47bc451efab)
+
+Accedere al sqlCmd:
+/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 123Stella
+
+Comando di ripristino partendo da un backup:
+RESTORE DATABASE [AlphaShop] FROM DISK = N'/var/opt/mssql/data/AlphaShop.bak'
+go
+
+IN CASO DI ERRORI:
+touch /var/opt/mssql/data/AlphaShop.mdf (sul conteiner, fuori dal SqlCmd, nel caso fare exit per uscire)
+touch /var/opt/mssql/data/AlphaShop_log.ldf
+
+Poi Nel sqlCmd:
+RESTORE DATABASE [AlphaShop] FROM DISK = N'/var/opt/mssql/data/AlphaShop.bak' WITH REPLACE
+go
+
+
+ACCESSO AL DB TRAMITE MSSQL SERVER MANAGEMENT STUDIO:
+127.0.0.1
+SA oppure ApiClient ->(SA=Amministratore; ApiClient=Utenza con perm di lettura e scrittura usata dalla web api)
+123Stella
+NON FUNZIONA PIU: "Data Source=127.0.0.1;Initial Catalog=AlphaShop;Integrated Security=False;TrustServerCertificate=True;User ID=ApiClient;Password=123Stella" //SA (admin)
+
+FARE RESTORE DEL BACKUP DEL DB E POI INSERIRE UN NUOVO UTENTE
+
+Utenti:
+Mattia
+123_Stella
+ADMIN
+USER
+
+AGGIUNGERE UTENTE
+/api/user/inserisci
+{
+  "codFidelity": "67000215",
+  "userId": "Mattia",
+  "password": "123_Stella",
+  "abilitato": "Si",
+  "profili": [
+    {
+      "codFidelity": "67000215",
+      "tipo": "ADMIN"
+    },
+	{
+      "codFidelity": "67000215",
+      "tipo": "USER"
+    }
+  ]
+}

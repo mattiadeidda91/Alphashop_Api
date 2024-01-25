@@ -1,0 +1,19 @@
+{
+  "codArt": "123Test",
+  "descrizione": "Articolo di prova",
+  "pzCart": 10,
+  "pesoNetto": 0.4,
+  "um": "PZ",
+  "codStat": "123",
+  "dataCreazione": "2023-07-14T11:35:49.698Z",
+  "barCodes": [
+    {
+	  "idTipoArt": "1",
+      "barcode": "12345678",
+      "codArt": "CP"
+    }
+  ],
+  "idIva": 10,
+  "idFamAss": 1,
+  "idStatoArt": "1"
+}

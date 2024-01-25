@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "ArticoliWebServices_xUnit_Tests": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:58465;http://localhost:58466"
+    }
+  }
+}
